@@ -14,6 +14,35 @@
 @media(max-width:390px){.topbar{gap:8px}.top-actions{gap:5px}.icon-btn{padding:7px;min-width:36px}.hero h1{font-size:30px}.controls{grid-template-columns:1fr}.controls .control:first-child{grid-column:auto}.topic-title{font-size:14px}.chapter-heading .btn{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 @media print{body{background:#fff!important;color:#111!important;--bg:#fff;--panel:#fff;--panel2:#fff;--panel3:#f4f4f4;--text:#111;--muted:#444;--faint:#666;--line:#bbb;--accent:#05665d;--gold:#8a6500;--blue:#294a82;--shadow:none}.app-shell{max-width:none;padding:0}.top-actions,.hero-utilities,.controls,.filter-row .btn,.footer,.topic-card details,button,.study-check,.side-column,.tiers{display:none!important}.hero,.panel,.metric,.topic-card{box-shadow:none;break-inside:avoid}.hero{padding:10px;border:0}.chapter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.chapter-card{min-height:0;padding:10px}.main-columns{display:block}.chapter-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.topic-list{grid-template-columns:1fr 1fr}.topic-card{padding:10px}.topic-title{font-size:11px}.topic-count .num{font-size:18px}.topic-count .caption{font-size:9px}.topic-bottom{margin-top:5px}.topic-stats{font-size:9px}.stars{font-size:12px}}
+
+/* Compact medium-sized All-Chapter Analysis table */
+.chapter-analysis{margin:16px 0 24px}
+.chapter-analysis .section-head{margin:22px 0 12px}
+.chapter-analysis .section-head h2{font-size:19px;letter-spacing:-.02em}
+.chapter-analysis .section-head p{font-size:12px}
+.analysis-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.analysis-table{width:100%;border-collapse:collapse;min-width:590px;table-layout:fixed;text-align:left}
+.analysis-table th,.analysis-table td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}
+.analysis-table th:nth-child(1),.analysis-table td:nth-child(1){width:8%}
+.analysis-table th:nth-child(2),.analysis-table td:nth-child(2){width:42%;min-width:0}
+.analysis-table th:nth-child(3),.analysis-table td:nth-child(3){width:13%}
+.analysis-table th:nth-child(4),.analysis-table td:nth-child(4){width:37%;min-width:0}
+.analysis-table thead th{background:var(--panel2);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.045em}
+.analysis-table tbody tr:last-child td{border-bottom:0}
+.analysis-table tbody tr:hover{background:var(--panel2)}
+.analysis-table td:nth-child(1){white-space:nowrap;color:var(--accent);font-size:13px;font-weight:750}
+.analysis-table td:nth-child(2){font-size:14px;font-weight:650;min-width:0;line-height:1.45;overflow-wrap:anywhere}
+.analysis-table td:nth-child(3){font-size:16px;font-weight:750;white-space:nowrap}
+.analysis-note{margin:10px 2px 0;color:var(--muted);font-size:11.5px;max-width:1050px;line-height:1.5}
+.analysis-note strong{color:var(--text)}
+.importance-track{display:block;width:100%;min-width:0;max-width:100%;height:10px;margin:2px 0 0;border-radius:999px;background:var(--panel3);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(127,151,180,.13)}
+.importance-fill{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#3478f6 0%,#37b8f5 35%,#60d38b 68%,#ffe04b 100%);transition:width .35s ease}
+.analysis-table td:nth-child(4){width:25%;min-width:150px;vertical-align:middle}
+.analysis-table .importance-cell{vertical-align:middle}
+.analysis-table .importance-fill{box-shadow:0 0 6px rgba(255,224,75,.12)}
+.chapter-analysis-link{display:inline;text-align:left;padding:0;border:0;background:transparent;color:var(--accent);font:inherit;font-size:14px;font-weight:650;line-height:1.45;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}.chapter-analysis-link:hover,.chapter-analysis-link:focus-visible{text-decoration-color:currentColor;color:var(--text)}
+@media(max-width:700px){.analysis-table th,.analysis-table td{padding:9px 10px}.analysis-table td:nth-child(2){font-size:13px}.analysis-table td:nth-child(3){font-size:15px}.importance-track{width:100%;min-width:0;height:9px}}
+
 </style>
 </head>
 <body>
@@ -42,7 +71,16 @@
     </section>
 
     <section class="metrics" aria-label="Dataset overview" id="overviewMetrics"></section>
-    <div class="notice"><strong>Important data note.</strong> The source tables list years when a topic appeared, not a separate numeric count. The analyzer counts the entries in each M year list and preserves repeated labels. This is a count of <em>listed year entries</em>, not proof of distinct exam-question totals. A missing M list is shown as “Not listed” rather than treated as zero.</div>
+    <section class="chapter-analysis" aria-labelledby="chapterAnalysisHeading">
+      <div class="section-head"><div><h2 id="chapterAnalysisHeading">All-Chapter Analysis &amp; Study Order</h2><p>One combined total for the listed M (Medical) and D (Dental) year entries in each chapter.</p></div></div>
+      <div class="analysis-wrap">
+        <table class="analysis-table">
+          <thead><tr><th scope="col">Study order</th><th scope="col">Chapter</th><th scope="col">Total M + D entries</th><th scope="col">Importance</th></tr></thead>
+          <tbody id="chapterAnalysisRows"></tbody>
+        </table>
+      </div>
+      <p class="analysis-note">Counting rule: totals add the year labels that are actually listed under M and D across the chapter’s topics. Repeated labels are retained. These totals represent <strong>listed year entries</strong>, not independently verified distinct exam-question counts. A missing year list remains unlisted, not zero. Study order is relative to the five chapters in this source.</p>
+    </section>
 
     <div class="section-head"><div><h2>Explore chapters</h2><p>Select a chapter to see its topic distribution, ratings, and source year lists.</p></div><span class="pill" id="chapterResultPill">5 chapters</span></div>
     <section class="chapter-grid" id="chapterGrid" aria-label="Chapters"></section>
@@ -70,7 +108,7 @@
     <div class="main-columns">
       <section class="panel">
         <h2>Topic Importance Analysis</h2>
-        <p class="panel-sub">Each rating is calculated from this chapter’s available M-year entries. Expand any topic to inspect the original M/D year lists and source page.</p>
+        <p class="panel-sub">Each rating is calculated from this chapter’s available M year entries. Expand any topic to inspect the original M/D year lists and source page.</p>
         <div class="controls">
           <div class="control"><label class="control-label" for="topicSearch">Search topics</label><input class="field" id="topicSearch" type="search" placeholder="Type a topic name…" autocomplete="off"></div>
           <div class="control"><label class="control-label" for="sortBy">Sort topics</label><select class="select" id="sortBy"><option value="source">Original PDF order</option><option value="count-desc">Highest count first</option><option value="count-asc">Lowest count first</option><option value="importance">Highest importance first</option><option value="alpha">Alphabetical</option></select></div>
@@ -82,7 +120,7 @@
       </section>
       <aside class="side-column">
         <section class="panel">
-          <h2>শুধুমাত্র মেডেকেলে বিগত বছরে (ডেন্টাল নয়)</h2><p class="panel-sub">ডেন্টাল দেখতে নিচে Topic Importance Analysis এ যান</p>
+          <h3>Historical frequency</h3><p class="panel-sub">Listed M year entries by topic. Scroll to see the full chapter.</p>
           <div id="frequencyChart" class="chart-list" role="img" aria-label="Bar chart of listed medical year entries by topic"></div>
           <div class="rank-list" id="chapterInsights"></div>
         </section>
@@ -178,6 +216,17 @@ function tierLabel(tier){return ({high:'High Yield Important',mid:'Important',lo
 function ratingFor(t){return state.ratings.get(t.id)||{tier:'unknown',stars:null,reason:'Not rated.'};}
 function starsText(r){if(r.stars===null)return '☆☆☆☆☆';return '★'.repeat(r.stars)+'☆'.repeat(5-r.stars);}
 function starAria(r){return r.stars===null?'Rating unknown; M years not listed':`${r.stars} out of 5 stars`;}
+function renderChapterAnalysis(){
+ const rows=DATA.chapters.map(ch=>({
+  chapter:ch,
+  total:ch.topics.reduce((sum,t)=>sum+(Array.isArray(t.medicalYears)?t.medicalYears.length:0)+(Array.isArray(t.dentalYears)?t.dentalYears.length:0),0)
+ })).sort((a,b)=>b.total-a.total||a.chapter.number-b.chapter.number);
+ const maxTotal=Math.max(1,...rows.map(row=>row.total));
+ $('#chapterAnalysisRows').innerHTML=rows.map((row,index)=>{
+  const importance=Math.max(0,Math.min(100,(row.total/maxTotal)*100));
+  return `<tr><td>#${index+1}</td><td><button type="button" class="chapter-analysis-link" data-open-chapter="${esc(row.chapter.id)}" lang="bn" aria-label="Open analysis for Chapter ${row.chapter.number}">Chapter ${row.chapter.number} — ${esc(row.chapter.name)} ↗</button></td><td class="analysis-total">${row.total}</td><td class="importance-cell"><div class="importance-track" role="img" aria-label="Chapter ${row.chapter.number}: ${row.total} combined listed M and D year entries; ${Math.round(importance)} percent of the highest chapter total" title="${row.total} combined listed M + D year entries"><span class="importance-fill" style="width:${importance.toFixed(1)}%"></span></div></td></tr>`;
+ }).join('');
+}
 function renderOverview(){
  const topics=allTopics;const known=topics.filter(countable);const listedTotal=known.reduce((s,t)=>s+t.medicalCount,0);const unknown=topics.length-known.length;
  $('#overviewMetrics').innerHTML=`<div class="metric"><div class="label">Chapters in this scan</div><div class="value">${DATA.chapters.length}</div><div class="hint">Chapter tables found</div></div><div class="metric"><div class="label">Topic records</div><div class="value">${topics.length}</div><div class="hint">All extracted rows retained</div></div><div class="metric"><div class="label">Listed M year entries</div><div class="value">${listedTotal}</div><div class="hint">Summed across topic rows; entries may repeat</div></div><div class="metric"><div class="label">M year lists not listed</div><div class="value">${unknown}</div><div class="hint">Kept unknown, not converted to zero</div></div>`;
@@ -242,7 +291,7 @@ function runtimeChecks(){const ids=allTopics.map(t=>t.id);const ok=new Set(ids).
 document.addEventListener('click',e=>{const opener=e.target.closest('[data-open-chapter]');if(opener){openChapter(opener.dataset.openChapter);return;}if(e.target.closest('#backHome')){showDashboard();return;}if(e.target.closest('#themeToggle')){toggleTheme();return;}if(e.target.closest('#downloadJson')||e.target.closest('#downloadFullData')){downloadJson();return;}if(e.target.closest('#downloadAudit')){downloadAudit();return;}if(e.target.closest('#viewAuditTop')){showAudit();return;}if(e.target.closest('#closeAudit')){$('#auditPanel').classList.add('hidden');return;}if(e.target.closest('#printChapter')){window.print();return;}if(e.target.closest('#exportCsv')){exportChapterCsv();return;}if(e.target.closest('#resetFilters')){$('#topicSearch').value='';$('#sortBy').value='source';$('#filterBy').value='all';state.sort='source';state.filter='all';renderTopicList();return;}if(e.target.closest('#clearStudy')){const ch=currentChapter();if(ch)ch.topics.forEach(t=>state.reviewed.delete(t.id));renderStudyChecklist();renderTopicList();notify('Study checkmarks cleared for this chapter.');return;}});
 document.addEventListener('input',e=>{if(e.target.id==='chapterSearch'){renderChapters();}if(e.target.id==='topicSearch'){renderTopicList();}if(['highShare','midShare','manualHigh','manualMid'].includes(e.target.id)){if(currentChapter()){saveCurrentConfigFromControls();renderChapter();}}});
 document.addEventListener('change',e=>{if(e.target.id==='sortBy'){state.sort=e.target.value;renderTopicList();}if(e.target.id==='filterBy'){state.filter=e.target.value;renderTopicList();}if(e.target.id==='methodSelect'){saveCurrentConfigFromControls();rerate();}if(e.target.matches('[data-review]')){if(e.target.checked)state.reviewed.add(e.target.dataset.review);else state.reviewed.delete(e.target.dataset.review);renderStudyChecklist();renderTopicList();}});
-restoreTheme();$('#themeToggle').textContent=document.documentElement.dataset.theme==='light'?'☾':'☼';$('#themeToggle').setAttribute('aria-label',document.documentElement.dataset.theme==='light'?'Switch to dark theme':'Switch to light theme');renderOverview();renderChapters();runtimeChecks();
+restoreTheme();$('#themeToggle').textContent=document.documentElement.dataset.theme==='light'?'☾':'☼';$('#themeToggle').setAttribute('aria-label',document.documentElement.dataset.theme==='light'?'Switch to dark theme':'Switch to light theme');renderOverview();renderChapterAnalysis();renderChapters();runtimeChecks();
 </script>
 </body>
 </html>
